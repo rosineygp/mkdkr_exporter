@@ -1,0 +1,20 @@
+# pipeline autogen by mkdkr_exporter
+# https://gitlab.com/rosiney.gp/mkdkr_exporter
+
+language: minimal
+
+dist: bionic
+
+services:
+  - docker
+
+before_install:
+  - sudo apt-get install -y make
+
+jobs:
+  include:
+    {%- for job in jobs %}
+    - stage: {{ job.stage }}
+      name: {{ job.name }}
+      script: {{ job.cmd }}
+    {%- endfor %}

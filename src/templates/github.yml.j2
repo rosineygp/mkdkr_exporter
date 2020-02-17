@@ -1,0 +1,18 @@
+# pipeline autogen by mkdkr_exporter
+# https://gitlab.com/rosiney.gp/mkdkr_exporter
+
+name: CI
+
+on: [push]
+
+jobs:
+  pipeline:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v1
+    {%- for job in jobs %}
+    - name: {{ job.name }}
+      run: {{ job.cmd }}
+    {%- endfor %}

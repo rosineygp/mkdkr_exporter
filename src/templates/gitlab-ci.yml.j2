@@ -17,9 +17,9 @@ image: docker:19
 
 before_script:
   - apk add make bash git
-{% for job in jobs %}
+{%- for job in jobs %}
 {{ job.name }}:
   stage: {{ job.stage }}
   script:
   - {{ job.cmd }}
-{% endfor %}
+{%- endfor %}

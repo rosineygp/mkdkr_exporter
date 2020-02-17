@@ -1,0 +1,12 @@
+version: 2.1
+jobs:
+  build:
+    machine:
+      image: ubuntu-1604:201903-01
+    steps:
+    - checkout
+    {%- for job in jobs %}
+    - run:
+        name: {{ job.name }}
+        command: {{ job.cmd }}
+    {%- endfor %}
