@@ -1,0 +1,42 @@
+#!/bin/bash
+
+FILTER="^[a-zA-Z][a-zA-Z0-9\_\/\.\-]+:((\ [a-zA-Z][a-zA-Z0-9\_\/\.\-]+)?)+$"
+
+_stage() {
+  _STAGE="$(echo "${1}" | sed 's/\:.*//g')"
+  if [[ "${_STAGE}" == */* ]]; then
+    echo "${_STAGE}" | cut -d'/' -f1
+  elif [[ "${_STAGE}" == *.* ]]; then
+    echo "${_STAGE}" | cut -d'.' -f1
+  else
+    echo "${_STAGE}"
+  fi
+}
+
+_print_header() {
+  echo "jobs:"
+}
+
+_print_job() {
+  _LINE="${1}"
+  _STAGE="${2}"
+  echo "  - name: $(echo "$_LINE" | sed 's/\//\ /g;s/\./\ /g;s/\:.*//g')"
+  echo "    stage: $_STAGE"
+  echo "    cmd: make $(echo "$_LINE" | sed 's/\:.*//g')"
+}
+
+_print_header
+
+# read from user makefile
+while IFS= read -r LINE; do
+  STAGE=$(_stage "$LINE")
+  _print_job "$LINE" "$STAGE"
+done < <(grep -E "$FILTER" Makefile)
+
+# bring makefile db for implicit tasks
+while IFS= read -r LINE; do
+  STAGE=$(_stage "$LINE")
+  _print_job "$LINE" "$STAGE"
+done < <(diff --unchanged-line-format= --old-line-format= --new-line-format='%L' \
+  <(grep -E "$FILTER" Makefile | sort) \
+  <(make -qp | grep -E "$FILTER" | grep -v Makefile | sort))

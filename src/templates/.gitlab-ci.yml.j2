@@ -1,0 +1,25 @@
+# pipeline autogen by mkdkr_exporter
+# https://gitlab.com/rosiney.gp/mkdkr_exporter
+
+stages:
+  {%- for stage in jobs|map(attribute='stage')|unique|list %}
+  - {{ stage }}
+  {%- endfor %}
+
+services:
+  - docker:19.03.1-dind
+
+variables:
+  DOCKER_HOST: tcp://docker:2376
+  DOCKER_TLS_CERTDIR: "/certs"
+
+image: docker:19
+
+before_script:
+  - apk add make bash git
+{% for job in jobs %}
+{{ job.name }}:
+  stage: {{ job.stage }}
+  script:
+  - {{ job.cmd }}
+{% endfor %}
