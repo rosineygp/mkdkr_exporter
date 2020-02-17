@@ -1,7 +1,7 @@
 include $(shell bash .mkdkr init)
 
 PROJECT=rosiney
-REPOS=mkdkr_export
+REPOS=mkdkr_exporter
 
 build:
 	$(docker_build)
