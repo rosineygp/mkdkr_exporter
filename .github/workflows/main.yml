@@ -1,0 +1,21 @@
+name: CI
+
+on: [push]
+
+jobs:
+  pipeline:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: commitlint
+      run: make commitlint
+    - name: build
+      run: make build
+    - name: push
+      run: make push
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
