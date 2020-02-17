@@ -39,4 +39,4 @@ while IFS= read -r LINE; do
   _print_job "$LINE" "$STAGE"
 done < <(diff --unchanged-line-format= --old-line-format= --new-line-format='%L' \
   <(grep -E "$FILTER" Makefile | sort) \
-  <(make -qp | grep -E "$FILTER" | grep -v Makefile | sort))
+  <(make -qp | grep -E "$FILTER" | grep -v -E 'Makefile|export.(gitlab-ci|github|travis|circle-ci)' | sort))
