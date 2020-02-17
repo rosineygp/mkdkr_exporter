@@ -17,7 +17,7 @@ All Makefile user targets is added, including implicit jobs (like [commitlint](h
 
 Additional environment variables, flows and error handling needs to be implemented by user.
 
-> This project pipeline is made using [mkdkr_export](https://github.com/rosineygp/mkdkr_exporter).
+> This project pipeline is made using [mkdkr_exporter](https://github.com/rosineygp/mkdkr_exporter).
 
 # usage
 
