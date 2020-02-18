@@ -45,3 +45,44 @@ make exporter.travis
 # export to circle ci
 make exporter.circle-ci
 ```
+
+## how it works
+
+The script will read `Makefile` and execute `make -qp`. It will return all explicit and implicit make targets.
+
+For better result add and prefix in your Makefile target name like this.
+
+```Makefile
+lint.python:
+  ...
+
+test.unit:
+  ...
+
+test.dast:
+  ...
+
+deploy.heroku:
+  ...
+```
+
+or using slash as separator.
+
+```Makefile
+lint/python:
+  ...
+
+test/unit:
+  ...
+
+test/dast:
+  ...
+
+deploy/heroku:
+  ...
+```
+The prefix will be used as job **stage** and run in parallel at **gitlab-ci** and **travis**.
+
+If not added prefix, the stage name will be the same as target name.
+
+> Implicit jobs will be attached after explicits jobs.
