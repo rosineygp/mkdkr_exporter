@@ -13,8 +13,6 @@ Export Makefile to following pipeline engines:
 
 All Makefile user targets is added, including implicit jobs (like [commitlint](https://github.com/rosineygp/mkdkr_commitlint)).
 
-> It exclude itself, cause `exporter` jobs are implicit.
-
 Additional environment variables, flows and error handling needs to be implemented by user.
 
 > This project pipeline is made using [mkdkr_exporter](https://github.com/rosineygp/mkdkr_exporter).
@@ -34,16 +32,16 @@ No needs aditional step in your Makefile (implicit)
 
 ```bash
 # export to gitlab
-make exporter.gitlab-ci
+make _exporter_gitlab-ci
 
 # export to github actions
-make exporter.github
+make _exporter_github
 
 # export to travis
-make exporter.travis
+make _exporter_travis
 
 # export to circle ci
-make exporter.circle-ci
+make _exporter_circle-ci
 ```
 
 ## how it works
@@ -85,4 +83,8 @@ The prefix will be used as job **stage** and run in parallel at **gitlab-ci** an
 
 If not added prefix, the stage name will be the same as target name.
 
-> Implicit jobs will be attached after explicits jobs.
+## exclude targets
+
+To exclude a target in exporter generator the first letter of target name needs to be different of following regex **[a-zA-Z]**.
+
+> \* suggest start with **_** underscore.
