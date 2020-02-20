@@ -1,0 +1,37 @@
+pipeline {
+  agent {
+    node {
+      label 'any'
+    }
+  }
+
+  stages("mkdkr_exporter") {
+  {%- for stage in jobs|map(attribute='stage')|unique|list %}
+  {%- if jobs|selectattr('stage', 'equalto', stage)|list|count > 1 %}
+    stage("{{ stage }}") {
+      parallel {
+      {%- for job in jobs|selectattr('stage') %}
+        {%- if job.stage == stage %}
+        stage("{{ job.name }}") {
+          steps {
+            sh "{{ job.cmd }}"
+          }
+        }
+        {%- endif %}
+      {%- endfor %}
+      }
+    }
+  {% else %}
+    {%- for job in jobs|selectattr('stage') %}
+      {%- if job.stage == stage %}
+    stage("{{ job.name }}") {
+      steps {
+        sh "{{ job.cmd }}"
+      }
+    }
+      {%- endif %}
+    {%- endfor %}
+  {%- endif %}
+  {%- endfor %}
+  }
+}
