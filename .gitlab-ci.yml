@@ -1,0 +1,31 @@
+# pipeline autogen by mkdkr_exporter
+# https://gitlab.com/rosiney.gp/mkdkr_exporter
+
+stages:
+  - build
+  - push
+  - commitlint
+
+services:
+  - docker:19.03.1-dind
+
+variables:
+  DOCKER_HOST: tcp://docker:2376
+  DOCKER_TLS_CERTDIR: "/certs"
+
+image: docker:19
+
+before_script:
+  - apk add make bash git
+build:
+  stage: build
+  script:
+  - make build
+push:
+  stage: push
+  script:
+  - make push
+commitlint:
+  stage: commitlint
+  script:
+  - make commitlint

@@ -6,20 +6,20 @@ define exporter_header =
 	.. /app/export_data \> /tmp/export.yaml
 endef
 
-exporter.gitlab-ci:
+_exporter_gitlab-ci:
 	$(exporter_header)
 	.. jinja2 --format=yml /app/templates/gitlab-ci.yml.j2 /tmp/export.yaml > .gitlab-ci.yml
 
-exporter.github:
+_exporter_github:
 	$(exporter_header)
 	mkdir -p .github/workflows/
 	.. jinja2 --format=yml /app/templates/github.yml.j2 /tmp/export.yaml > .github/workflows/main.yml
 
-exporter.travis:
+_exporter_travis:
 	$(exporter_header)
 	.. jinja2 --format=yml /app/templates/travis.yml.j2 /tmp/export.yaml > .travis.yml
 
-exporter.circle-ci:
+_exporter_circle-ci:
 	$(exporter_header)
 	mkdir -p .circleci
 	.. jinja2 --format=yml /app/templates/travis.yml.j2 /tmp/export.yaml > .circleci/config.yml

@@ -5,8 +5,12 @@ jobs:
       image: ubuntu-1604:201903-01
     steps:
     - checkout
-    {%- for job in jobs %}
+{%- for stage in jobs|map(attribute='stage')|unique|list %}
+  {%- for job in jobs|selectattr('stage' ) %}
+    {%- if job.stage == stage %}
     - run:
         name: {{ job.name }}
         command: {{ job.cmd }}
-    {%- endfor %}
+    {%- endif %}
+  {%- endfor %}
+{%- endfor %}
