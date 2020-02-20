@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 {%- for stage in jobs|map(attribute='stage')|unique|list %}
-  {%- for job in jobs|selectattr('stage' ) %}
+  {%- for job in jobs|selectattr('stage') %}
     {%- if job.stage == stage %}
     - name: {{ job.name }}
       run: {{ job.cmd }}

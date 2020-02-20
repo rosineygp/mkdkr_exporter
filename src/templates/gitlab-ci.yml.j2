@@ -19,7 +19,7 @@ before_script:
   - apk add make bash git
 
 {%- for stage in jobs|map(attribute='stage')|unique|list %}
-  {%- for job in jobs|selectattr('stage' ) %}
+  {%- for job in jobs|selectattr('stage') %}
     {%- if job.stage == stage %}
 
 {{ job.name }}:
