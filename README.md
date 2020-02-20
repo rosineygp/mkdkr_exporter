@@ -42,6 +42,9 @@ make _exporter_travis
 
 # export to circle ci
 make _exporter_circle-ci
+
+# export to jenkins (pipeline syntax)
+make _exporter_jenkins_pipeline
 ```
 
 ## how it works

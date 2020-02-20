@@ -14,7 +14,7 @@ before_install:
 jobs:
   include:
 {%- for stage in jobs|map(attribute='stage')|unique|list %}
-  {%- for job in jobs|selectattr('stage' ) %}
+  {%- for job in jobs|selectattr('stage') %}
     {%- if job.stage == stage %}
     - stage: {{ job.stage }}
       name: {{ job.name }}

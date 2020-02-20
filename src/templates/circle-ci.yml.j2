@@ -6,7 +6,7 @@ jobs:
     steps:
     - checkout
 {%- for stage in jobs|map(attribute='stage')|unique|list %}
-  {%- for job in jobs|selectattr('stage' ) %}
+  {%- for job in jobs|selectattr('stage') %}
     {%- if job.stage == stage %}
     - run:
         name: {{ job.name }}

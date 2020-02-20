@@ -23,3 +23,7 @@ _exporter_circle-ci:
 	$(exporter_header)
 	mkdir -p .circleci
 	.. jinja2 --format=yml /app/templates/travis.yml.j2 /tmp/export.yaml > .circleci/config.yml
+
+_exporter_jenkins_pipeline:
+	$(exporter_header)
+	.. jinja2 --format=yml /app/templates/Jenkinsfile.j2 /tmp/export.yaml > Jenkinsfile
