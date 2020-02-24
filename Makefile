@@ -8,8 +8,3 @@ build:
 
 push:
 	$(docker_push)
-
-teste:
-	@$(.)
-	... rosiney/mkdkr_exporter
-	.. bash
