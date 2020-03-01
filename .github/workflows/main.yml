@@ -1,16 +1,23 @@
+# pipeline autogen by mkdkr_exporter
+# https://gitlab.com/rosiney.gp/mkdkr_exporter
+
 name: CI
 
 on: [push]
 
 jobs:
-  pipeline:
-
+  commitlint:
     runs-on: ubuntu-18.04
-
     steps:
     - uses: actions/checkout@v1
     - name: commitlint
       run: make commitlint
+  build:
+    runs-on: ubuntu-18.04
+    needs:
+      - commitlint
+    steps:
+    - uses: actions/checkout@v1
     - name: build
       run: make build
     - name: push
