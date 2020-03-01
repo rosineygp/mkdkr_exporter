@@ -6,10 +6,11 @@
 
 Export Makefile to following pipeline engines:
 
-- gitlab-ci
-- github actions
-- travis
 - circle-ci
+- github actions
+- gitlab-ci
+- jenkins (dsl pipeline)
+- travis
 
 All Makefile user targets is added, including implicit jobs (like [commitlint](https://github.com/rosineygp/mkdkr_commitlint)).
 
