@@ -1,16 +1,38 @@
 version: 2.1
-jobs:
-  build:
+jobs:  
+{%- for stage in jobs|map(attribute='stage')|unique|list %}
+  {%- for job in jobs|selectattr('stage') %}
+    {%- if job.stage == stage %}
+  {{ job.name | replace(" ", "_") }}:
     machine:
       image: ubuntu-1604:201903-01
     steps:
     - checkout
-{%- for stage in jobs|map(attribute='stage')|unique|list %}
-  {%- for job in jobs|selectattr('stage') %}
-    {%- if job.stage == stage %}
     - run:
         name: {{ job.name }}
         command: {{ job.cmd }}
+    {%- endif %}
+  {%- endfor %}
+{%- endfor %}
+
+workflows:
+  version: 2.1
+  ci:
+    jobs:
+{%- for stage in jobs|map(attribute='stage')|unique|list %}
+  {%- for job in jobs|selectattr('stage') %}
+    {%- if job.stage == stage %}
+      - {{ job.name | replace(" ", "_") }}
+    {%- if jobs|map(attribute='stage')|unique|list|length > 1 -%}
+      {%- for need in jobs|map(attribute='stage')|unique|list -%}
+        {%- if need == stage and loop.previtem -%}:
+          requires: 
+          {%- for need_job in jobs|selectattr('stage', 'equalto', loop.previtem) %}
+            - {{ need_job.name | replace(" ", "_") }}
+          {%- endfor %}
+        {%- endif %}
+      {%- endfor %}
+    {%- endif %}
     {%- endif %}
   {%- endfor %}
 {%- endfor %}
