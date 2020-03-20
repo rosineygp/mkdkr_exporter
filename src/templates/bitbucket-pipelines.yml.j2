@@ -9,16 +9,20 @@ pipelines:
         {%- if job.stage == stage %}
         - step:
             name: {{ job.stage }}_{{ job.name }}
+            services:
+              - docker
             script:
               - apk add make bash git
               - {{ job.cmd }}
         {%- endif %}
       {%- endfor %}
-  {% else %}
+  {%- else %}
     {%- for job in jobs|selectattr('stage') %}
       {%- if job.stage == stage %}
     - step:
         name: {{ job.stage }}_{{ job.name }}
+        services:
+          - docker
         script:
           - apk add make bash git
           - {{ job.cmd }}
