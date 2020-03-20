@@ -11,7 +11,9 @@ Export Makefile to following pipeline engines:
 - gitlab-ci
 - jenkins (dsl pipeline)
 - travis
-- bitbucket-pipelines
+- bitbucket-pipelines ¹
+
+> ¹ privileged containers not working at bitbucket cloud
 
 All Makefile user targets is added, including implicit jobs (like [commitlint](https://github.com/rosineygp/mkdkr_commitlint)).
 
