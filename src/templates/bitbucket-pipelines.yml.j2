@@ -1,0 +1,28 @@
+image: docker:19
+
+pipelines:
+  default:
+  {%- for stage in jobs|map(attribute='stage')|unique|list %}
+  {%- if jobs|selectattr('stage', 'equalto', stage)|list|count > 1 %}
+    - parallel:
+      {%- for job in jobs|selectattr('stage') %}
+        {%- if job.stage == stage %}
+        - step:
+            name: {{ job.stage }}_{{ job.name }}
+            script:
+              - apk add make bash git
+              - {{ job.cmd }}
+        {%- endif %}
+      {%- endfor %}
+  {% else %}
+    {%- for job in jobs|selectattr('stage') %}
+      {%- if job.stage == stage %}
+    - step:
+        name: {{ job.stage }}_{{ job.name }}
+        script:
+          - apk add make bash git
+          - {{ job.cmd }}
+      {%- endif %}
+    {%- endfor %}
+  {%- endif %}
+  {%- endfor %}

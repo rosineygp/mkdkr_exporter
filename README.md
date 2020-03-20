@@ -11,6 +11,7 @@ Export Makefile to following pipeline engines:
 - gitlab-ci
 - jenkins (dsl pipeline)
 - travis
+- bitbucket-pipelines
 
 All Makefile user targets is added, including implicit jobs (like [commitlint](https://github.com/rosineygp/mkdkr_commitlint)).
 
@@ -46,6 +47,9 @@ make _exporter_circle-ci
 
 # export to jenkins (pipeline syntax)
 make _exporter_jenkins_pipeline
+
+# export to bitbucket pipelines
+make _exporter_bitbucket-pipelines
 ```
 
 ## how it works
