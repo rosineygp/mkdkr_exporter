@@ -27,3 +27,7 @@ _exporter_circle-ci:
 _exporter_jenkins_pipeline:
 	$(call _exporter_header)
 	run: jinja2 --format=yml /app/templates/Jenkinsfile.j2 /tmp/export.yaml > Jenkinsfile
+
+_exporter_bitbucket-pipelines:
+	$(call _exporter_header)
+	run: jinja2 --format=yml /app/templates/bitbucket-pipelines.yml.j2 /tmp/export.yaml > bitbucket-pipelines.yml
