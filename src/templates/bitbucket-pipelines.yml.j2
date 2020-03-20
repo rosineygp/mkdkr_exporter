@@ -1,4 +1,6 @@
-image: docker:19
+image: rosiney/mkdkr
+options:
+  docker: true
 
 pipelines:
   default:
@@ -8,11 +10,8 @@ pipelines:
       {%- for job in jobs|selectattr('stage') %}
         {%- if job.stage == stage %}
         - step:
-            name: {{ job.stage }}_{{ job.name }}
-            services:
-              - docker
+            name: {{ job.name }}
             script:
-              - apk add make bash git
               - {{ job.cmd }}
         {%- endif %}
       {%- endfor %}
@@ -20,11 +19,8 @@ pipelines:
     {%- for job in jobs|selectattr('stage') %}
       {%- if job.stage == stage %}
     - step:
-        name: {{ job.stage }}_{{ job.name }}
-        services:
-          - docker
+        name: {{ job.name }}
         script:
-          - apk add make bash git
           - {{ job.cmd }}
       {%- endif %}
     {%- endfor %}
