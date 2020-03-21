@@ -13,10 +13,7 @@ variables:
   DOCKER_HOST: tcp://docker:2376
   DOCKER_TLS_CERTDIR: "/certs"
 
-image: docker:19
-
-before_script:
-  - apk add make bash git
+image: rosiney/mkdkr
 
 {%- for stage in jobs|map(attribute='stage')|unique|list %}
   {%- for job in jobs|selectattr('stage') %}
