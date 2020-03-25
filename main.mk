@@ -31,3 +31,8 @@ _exporter_jenkins_pipeline:
 _exporter_bitbucket-pipelines:
 	$(call _exporter_header)
 	run: jinja2 --format=yml /app/templates/bitbucket-pipelines.yml.j2 /tmp/export.yaml > bitbucket-pipelines.yml
+
+_exporter_shell:
+	$(call _exporter_header)
+	run: jinja2 --format=yml /app/templates/pipeline.sh.j2 /tmp/export.yaml > pipeline.sh
+	run: chmod +x pipeline.sh
