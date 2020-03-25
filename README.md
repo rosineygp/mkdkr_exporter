@@ -12,6 +12,7 @@ Export Makefile to following pipeline engines:
 - jenkins (dsl pipeline)
 - travis
 - bitbucket-pipelines ¹
+- local - shellscript
 
 > ¹ privileged containers not working at bitbucket cloud
 
@@ -52,6 +53,9 @@ make _exporter_jenkins_pipeline
 
 # export to bitbucket pipelines
 make _exporter_bitbucket-pipelines
+
+# export to local - shellscript
+make _exporter_shell
 ```
 
 ## how it works

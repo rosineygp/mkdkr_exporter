@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+{% for stage in jobs|map(attribute='stage')|unique|list %}
+{%- if jobs|selectattr('stage', 'equalto', stage)|list|count > 1 %}
+make -j{{ jobs|selectattr('stage', 'equalto', stage)|list|count }} --output-sync=line
+    {%- for job in jobs|selectattr('stage') -%}
+      {%- if job.stage == stage %} \
+  {{ job.cmd | replace('make ','')}}
+      {%- endif %}
+    {%- endfor %}
+{% else %}
+  {%- for job in jobs|selectattr('stage') %}
+    {%- if job.stage == stage %}
+{{ job.cmd }}
+    {% endif %}
+  {%- endfor %}
+{%- endif %}
+{%- endfor %}
