@@ -1,4 +1,4 @@
-include $(shell bash .mkdkr init)
+include $(shell [ ! -f .mkdkr ] && curl -fsSL https://git.io/JOBYz > .mkdkr; bash .mkdkr init)
 
 PROJECT=rosiney
 REPOS=mkdkr_exporter
