@@ -10,7 +10,7 @@ jobs:
   {%- for job in jobs|selectattr('stage') %}
     {%- if job.stage == stage %}
   {{ job.name | replace(" ", "_") }}:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     {%- if jobs|map(attribute='stage')|unique|list|length > 1 %}
       {%- for need in jobs|map(attribute='stage')|unique|list %}
         {%- if need == stage and loop.previtem %}
